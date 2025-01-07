@@ -4,10 +4,11 @@
 # Some help was recieved by Harrison S to shorten the function used to find a winner
 
 
+
 def main(): #Defines the main function
     board = board_game()
     print_board(board) 
-    X, O = player() 
+    X,O = player() 
     fullbrd(board, X, O) 
 
 def board_game(): #Defines the 2d array for the board
@@ -36,20 +37,20 @@ def start_gaming(board, X, O, count): #Prompts the active player for their move
     elif count == 0 or count == 2 or count == 4 or count == 6 or count == 8 or count == 10: #If player count is even
         player = O
     print(player + " goes now")
-    row = int(input("Pick a row:" ))
-    col = int(input("Pick a column: "))
+    row = int(input("Pick a column:" ))
+    col = int(input("Pick a row: "))
     while row > 2 or row < 0 or col > 2 or col < 0: #Out of range of board
         print("Invalid")
-        row = int(input("Pick a row: "))
-        col = int(input("Pick a column: "))
+        row = int(input("Pick a column: "))
+        col = int(input("Pick a row: "))
     while (board[row][col] == X) or (board[row][col] == O): #Spot is filled already
         print("INVALID")
-        row = int(input("Pick a row: "))
-        col = int(input("Pick a column: "))     
+        row = int(input("Pick a column: "))
+        col = int(input("Pick a row: "))     
     board[row][col] = player #Replaces the empty spot with X or O
     return (board)
 
-def game_over(board): #This function decides who won
+def game_over(board, X, O, count): #This function decides who won
     still_playing = True
     for row in range (0, 2):
         if board[row][0] == board[row][1] == board[row][2]: #scans the rows for winner
@@ -77,6 +78,8 @@ def fullbrd(board, X, O): #This function us used to find when the board is full 
         print_board(board)
         if count == 9: #If 9 spots are filled, the board is full
             print("The board is full.")
+            if still_playing == True:
+                print("There is a tie. ")
         still_playing = game_over(board, X, O, count)
         count += 1 #Adds one to the count
     if still_playing == False:
